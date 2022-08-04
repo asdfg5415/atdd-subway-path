@@ -38,8 +38,7 @@ class LineSectionAcceptanceTest extends AcceptanceTest {
     }
 
     /**
-     * given 새로운 역을 상행역, 기존의 상행 종점을 하행역으로 하는 구간을
-     * When 지하철 노선에 추가 요청하면
+     * When 새로운 역을 상행역, 기존의 상행 종점을 하행역으로 하는 구간을 지하철 노선에 추가 요청하면
      * Then 노선에 새로운 구간이 추가된다
      */
     @Test
