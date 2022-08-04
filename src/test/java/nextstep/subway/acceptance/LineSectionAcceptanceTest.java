@@ -51,13 +51,16 @@ class LineSectionAcceptanceTest extends AcceptanceTest {
     }
 
     /**
-     * given 기존의 하행 종점을 상행역, 새로운 역을 하행역으로 하는 구간을
-     * When 지하철 노선에 추가 요청하면
+     * When 기존의 하행 종점을 상행역, 새로운 역을 하행역으로 하는 구간을 지하철 노선에 추가 요청하면
      * Then 노선에 새로운 구간이 추가된다
      */
     @Test
     void 새로운_역을_하행_종점으로_등록할_경우_구간_추가_성공() {
+        // when
+        지하철_노선에_지하철_구간_생성_요청(신분당선, createSectionCreateParams(양재역, 정자역));
 
+        // then
+        구간_추가_검증(강남역, 양재역, 정자역);
     }
 
     /**
