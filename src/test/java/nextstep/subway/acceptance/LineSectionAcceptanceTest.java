@@ -22,6 +22,9 @@ class LineSectionAcceptanceTest extends AcceptanceTest {
     private Long 양재역;
     private Long 정자역;
 
+    private static final int 기준_보다_작은_거리 = 5;
+    private static final int 기준_거리 = 6;
+
     /**
      * Given 지하철역과 노선 생성을 요청 하고
      */
@@ -64,25 +67,33 @@ class LineSectionAcceptanceTest extends AcceptanceTest {
     }
 
     /**
-     * given 하행 종점이 아닌 기존 역을 상행역으로하는 구간에 대해
+     * When 하행 종점이 아닌 기존 역을 상행역으로하는 구간에 대해
      * 해당 구간 상행역을 상행역, 새로운 지하철 역을 하행역, 해당 구간의 길이보다 짧은 길이로 하는 구간을
-     * When 지하철 노선에 추가 요청하면
+     * 지하철 노선에 추가 요청하면
      * Then 노선에 새로운 구간이 추가된다
      */
     @Test
-    void 하행_종점이_아닌_기존_역을_상행역으로_하는_구간_사이에_새로운_역을_등록할_경우_구간_추가_성공() {
+    void 구간_사이에_새로운_역을_하행역으로_구간_추가_성공() {
+        // when
+        지하철_노선에_지하철_구간_생성_요청(신분당선, createSectionCreateParams(강남역, 정자역, 기준_보다_작은_거리));
 
+        // then
+        구간_추가_검증(강남역, 정자역, 양재역);
     }
 
     /**
-     * given 상행 종점이 아닌 기존 역을 히행역으로하는 구간에 대해
-     * 새로운 지하철 역을 상행역, 해당 구간 하행역을 하행역, 해당 구간의 길이보다 짧은 길이로 하는 구간을
-     * When 지하철 노선에 추가 요청하면
+     * When 상행 종점이 아닌 기존 역을 하행역으로하는 구간에 대해
+     *      새로운 지하철 역을 상행역, 해당 구간 하행역을 하행역, 해당 구간의 길이보다 짧은 길이로 하는 구간을
+     *      지하철 노선에 추가 요청하면
      * Then 노선에 새로운 구간이 추가된다
      */
     @Test
-    void 상행_종점이_아닌_기존_역을_하행역으로_하는_구간_사이에_새로운_역을_등록할_경우_구간_추가_성공() {
+    void 구간_사이에_새로운_역을_상행역으로_등록할_경우_구간_추가_성공() {
+        // when
+        지하철_노선에_지하철_구간_생성_요청(신분당선, createSectionCreateParams(정자역, 양재역, 기준_보다_작은_거리));
 
+        // then
+        구간_추가_검증(강남역, 정자역, 양재역);
     }
 
     /**
@@ -148,10 +159,14 @@ class LineSectionAcceptanceTest extends AcceptanceTest {
     }
 
     private Map<String, String> createSectionCreateParams(Long upStationId, Long downStationId) {
+        return createSectionCreateParams(upStationId, downStationId, 기준_거리);
+    }
+
+    private Map<String, String> createSectionCreateParams(Long upStationId, Long downStationId, int distance) {
         Map<String, String> params = new HashMap<>();
         params.put("upStationId", upStationId + "");
         params.put("downStationId", downStationId + "");
-        params.put("distance", 6 + "");
+        params.put("distance", distance + "");
         return params;
     }
 
