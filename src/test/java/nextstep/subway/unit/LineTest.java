@@ -35,10 +35,11 @@ class LineTest {
     @Test
     void getStations() {
         line.addSection(firstStation, secondStation, 10);
+        line.addSection(thirdStation, firstStation, 10);
 
-        List<Station> stations = line.getStations();
+        List<Station> stations = line.getStationsInOrder();
 
-        assertThat(stations).containsExactly(firstStation, secondStation);
+        assertThat(stations).containsExactly(thirdStation, firstStation, secondStation);
     }
 
     @Test
